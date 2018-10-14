@@ -1,8 +1,6 @@
 # LOGISTIC RESTful API
 ## Featuring Docker, Node, Express, MongoDB, Mongoose & NGINX
 
-## License & Purpose
-
 ## About
 
 - [Docker](https://www.docker.com/) as the container service to isolate the environment.
