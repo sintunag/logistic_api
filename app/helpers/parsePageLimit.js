@@ -6,28 +6,25 @@ const APIError = require('./APIError');
  * @param {String} type - what we're validating (skip or limit, default limit)
  * @return {Number} numerical form of the val
  */
-function parseSkipLimit(val, max = 1000, type = 'limit') {
+function parsePageLimit(val, type = 'limit') {
   if (!val) {
     return null;
   }
-  const min = type === 'skip' ? 0 : 1;
   const num = +val;
+  const min = 1;
 
   if (!Number.isInteger(num)) {
     return new APIError(
-      400,
-      'Bad Request',
+      500,
       `Invalid ${type}: '${val}', ${type} needs to be an integer.`
     );
-  } else if (num < min || (max && num > max)) {
+  } else if (num < min) {
     return new APIError(
-      400,
-      'Bad Request',
-      `${num} is out of range for ${type} -- it should be between ${min} and ${max}.`
+      500,
+      `number should be equal or greater than ${min}`
     );
   }
-
   return num;
 }
 
-module.exports = parseSkipLimit;
+module.exports = parsePageLimit;

@@ -28,9 +28,12 @@ distance.apiKey = GOOGLE_KEY;
 async function createOrder(request, response, next) {
   const validation = validate(request.body, orderNewSchema);
   if (!validation.valid) {
-    return response.status(500).json({
-      error: "REQUEST FORMAT IS NOT CORRECT"
-    });
+    return next(
+      new APIError(
+        500,
+        "REQUEST_BODY_INCORRECT"
+      )
+    );
   }
 
   try {
@@ -50,9 +53,7 @@ async function createOrder(request, response, next) {
       status: newOrder.status
     });
   } catch (err) {
-    return response.status(500).json({
-      error: err.message
-    });
+    next(err);
   }
 }
 
@@ -66,36 +67,21 @@ async function updateOrder(request, response, next) {
 
   const validation = validate(request.body, orderUpdateSchema);
   if (!validation.valid) {
-    return response.status(500).json({
-      error: "REQUEST FORMAT IS NOT CORRECT"
-    });
+    return next(
+      new APIError(
+        500,
+        "REQUEST_BODY_INCORRECT"
+      )
+    );
   }
 
   try {
     const order = await Order.updateOrder(id, request.body);
-
-    if (order === 404) {
-      return response.status(404).json({
-        status: "ORDER_NOT_FOUND"
-      });
-    } else if (order === 500) {
-      return response.status(500).json({
-        status: "ISSUE_IN_UPDATION"
-      });
-    } else if (order === 409) {
-      return response.status(409).json({
-        status: "ORDER_ALREADY_BEEN_TAKEN"
-      });
-    } else if (order.ok === 1) {
-      return response.status(200).json({
-        status: "SUCCESS"
-      });
-    }
-
-  } catch (err) {
-    return response.status(500).json({
-      status: "ISSUE_IN_UPDATION"
+    return response.status(200).json({
+      status: "SUCCESS"
     });
+  } catch (err) {
+    next(err);
   }
 }
 

@@ -3,7 +3,7 @@ const {
   Order
 } = require('../models');
 const {
-  parseSkipLimit
+  parsePageLimit
 } = require('../helpers');
 
 /**
@@ -11,16 +11,21 @@ const {
  */
 async function readOrders(request, response, next) {
   /* pagination validation */
-  let skip = parseSkipLimit(request.query.skip, null, 'skip') || 0;
-  let limit = parseSkipLimit(request.query.limit, 1000, 'limit') || 1000;
+  let limit = parsePageLimit(request.query.limit, 'limit');
+  let page = parsePageLimit(request.query.page, 'page');
+  let skip = limit * (page - 1) || 0;
+
+  if (typeof page !== 'number') {
+    return next(page);
+  } else if (typeof limit !== 'number') {
+    return next(limit);
+  }
 
   try {
     const orders = await Order.readOrders({}, {}, skip, limit);
     return response.json(orders);
   } catch (err) {
-    return response.status(500).json({
-      error: "SOMETHING_WENT_WRONG"
-    });
+    next(err);
   }
 }
 

@@ -29,8 +29,8 @@ else
 fi
 
 # # Start the application
-echo 'Starting application'
 docker-compose up &
+sleep 5
 ## Start Test Cases
 echo 'Starting Test Suite'
 npm test app/test

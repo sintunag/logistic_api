@@ -1,6 +1,9 @@
 // npm packages
 const mongoose = require('mongoose');
 
+// app imports
+const { APIError } = require('../helpers');
+
 // globals
 const Schema = mongoose.Schema;
 
@@ -66,14 +69,14 @@ orderSchema.statics = {
       });
 
       if (!order) {
-        return 404;
-      } else if (order.status === "taken" && orderUpdate.status === "taken") {
-        return 409;
+        throw new APIError(404, `No order with '${id}' found`);
+      } else if (order.status === "taken" && orderUpdate.status === "taken") {     //check if order status is already taken
+        throw new APIError(409, `ORDER_ALREADY_BEEN_TAKEN`)                                                              //and request status is also taken
       } else {
-        return order.update(orderUpdate, (err, data) => {});
+        return await order.update(orderUpdate);
       }
     } catch (err) {
-      return 500;
+      return Promise.reject(err);
     }
   }
 };

@@ -1,2 +1,2 @@
 exports.APIError = require('./APIError');
-exports.parseSkipLimit = require('./parseSkipLimit');
+exports.parsePageLimit = require('./parsePageLimit');

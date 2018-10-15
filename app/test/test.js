@@ -99,7 +99,7 @@ describe('/PUT /order/:id', () => {
 
   it('should return 500 for bad format', (done) => {
     chai.request(server)
-      .get('/orders')
+      .get('/orders?page=1&limit=1')
       .end((err, res) => {
         let orderResponse = res;
         chai.request(server)
@@ -110,14 +110,12 @@ describe('/PUT /order/:id', () => {
             expect(res).to.have.status(500);
             done();
           })
-
-
       });
   });
 
   it('should return success for updating status to taken', (done) => {
     chai.request(server)
-      .get('/orders')
+      .get('/orders?page=1&limit=1')
       .end((err, res) => {
         chai.request(server)
           .put('/order/' + res.body[0].id)
@@ -133,7 +131,7 @@ describe('/PUT /order/:id', () => {
 
   it('should return failure for updating status to taken', (done) => {
     chai.request(server)
-      .get('/orders')
+      .get('/orders?page=1&limit=1')
       .end((err, res) => {
         let orderResponse = res;
         chai.request(server)
@@ -163,6 +161,42 @@ describe('GET /', () => {
       .get('/orders?page=1&limit=2')
       .end(function(err, res) {
         expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('should return wrong limit datatype error with (limit=abc)', (done) => {
+    chai.request(server)
+      .get('/orders?page=1&limit=abc')
+      .end(function(err, res) {
+        expect(res).to.have.status(500);
+        done();
+      });
+  });
+
+  it('should return wrong page datatype error with (page=abc)', (done) => {
+    chai.request(server)
+      .get('/orders?page=abc&limit=1')
+      .end(function(err, res) {
+        expect(res).to.have.status(500);
+        done();
+      });
+  });
+
+  it('should return error with limit value less than 1 (limit=-1)', (done) => {
+    chai.request(server)
+      .get('/orders?page=abc&limit=1')
+      .end(function(err, res) {
+        expect(res).to.have.status(500);
+        done();
+      });
+  });
+
+  it('should return error with page value less than 1 (page=0)', (done) => {
+    chai.request(server)
+      .get('/orders?page=abc&limit=1')
+      .end(function(err, res) {
+        expect(res).to.have.status(500);
         done();
       });
   });

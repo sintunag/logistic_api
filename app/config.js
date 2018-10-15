@@ -5,7 +5,7 @@ const ENV = process.env.NODE_ENV;
 const PORT = process.env.PORT || 8080;
 
 //Google Distance API setting
-const GOOGLE_KEY = "";     //Please set google api key here
+const GOOGLE_KEY = ""; //Please set google api key here
 
 // database configs
 let MONGODB_URI = process.env.MONGODB_URI || 'mongodb://mongodb/logistic';
@@ -46,7 +46,7 @@ function globalResponseHeaders(request, response, next) {
     'Access-Control-Allow-Headers',
     'Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization'
   );
-  response.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+  response.header('Access-Control-Allow-Methods', 'PUT, POST, GET');
   response.header('Content-Type', 'application/json');
   return next();
 }
