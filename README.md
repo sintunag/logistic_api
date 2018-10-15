@@ -12,16 +12,22 @@
 
 ## How to Install & Run
 
-You will need to first download and install Docker - [Linux equivalent](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
-
 1.  Clone the repo
-2.  Run `docker-compose up` to start three containers:
+2.  Set Google Distance API key in app/config.js file line no. 8
+3.  Run `./start.sh` to download Docker CE and Docker Compose if not exist
+    after installing them start three containers:
     - the MongoDB database container
     - the Node.js app container
     - the NGINX proxy container
-3.  Server is accessible at `http://localhost:8080`
+4.  After starting container , testcases will run automatically
 
-## How to Run Tests
+#Manually Starting the docker and test Cases
+
+1. You can run `docker-compose` up from terminal
+2. Server is accessible at `http://localhost:8080`
+3. Run manual testcase suite by `npm test app/test`
+
+## How to Run Tests (Explicity from cli)
 
  You should be able to run `npm install` followed by `npm test app/test` to run everything (assuming you have the LTS version of Node installed on your machine).
 
