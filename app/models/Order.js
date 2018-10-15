@@ -45,9 +45,6 @@ orderSchema.statics = {
       const orders = await this.find(query, fields)
         .skip(skip)
         .limit(limit)
-        .sort({
-          name: 1
-        })
         .exec();
       if (!orders.length) {
         return [];

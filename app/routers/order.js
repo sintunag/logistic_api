@@ -15,7 +15,7 @@ const {
 
 /* All the Orders Route */
 router
-  .route('')
+  .route('/')
   .post(createOrder);
 
 /* Single Order by Id Route */
