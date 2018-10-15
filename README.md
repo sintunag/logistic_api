@@ -21,9 +21,9 @@
     - the NGINX proxy container
 4.  After starting container , testcases will run automatically
 
-#Manually Starting the docker and test Cases
+## Manually Starting the docker and test Cases
 
-1. You can run `docker-compose` up from terminal
+1. You can run `docker-compose up` from terminal
 2. Server is accessible at `http://localhost:8080`
 3. Run manual testcase suite by `npm test app/test`
 
