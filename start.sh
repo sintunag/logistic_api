@@ -29,7 +29,7 @@ else
 fi
 
 # # Start the application
-docker-compose up &
+sudo docker-compose up &
 sleep 5
 ## Start Test Cases
 echo 'Starting Test Suite'
