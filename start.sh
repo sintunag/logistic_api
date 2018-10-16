@@ -29,6 +29,7 @@ else
 fi
 
 # # Start the application
+sudo npm install 
 sudo docker-compose up &
 sleep 5
 ## Start Test Cases
